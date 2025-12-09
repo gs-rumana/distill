@@ -1,0 +1,49 @@
+{
+	"$schema": "https://json.schemastore.org/expo-53.0.0.json",
+	"expo": {
+		"name": "Distill",
+		"slug": "distill",
+		"androidNavigationBar": {
+			"visible": "leanback"
+		},
+		"primaryColor": "#553FE9",
+		"icon": "./assets/icon-ios.png",
+		"userInterfaceStyle": "automatic",
+		"plugins": [
+			"expo-router",
+			[
+				"expo-font",
+				{
+					"fonts": [
+						"./assets/fonts/Rubik-Regular.ttf",
+						"./assets/fonts/Rubik-Medium.ttf",
+						"./assets/fonts/Rubik-SemiBold.ttf",
+						"./assets/fonts/Rubik-Bold.ttf"
+					]
+				}
+			],
+			[
+				"react-native-bootsplash",
+				{
+					"assetsDir": "assets/bootsplash"
+				}
+			]
+		],
+		"version": "0.1.0",
+		"android": {
+			"package": "com.gs_rumana.distill",
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/android-adaptive-foreground.png",
+				"backgroundColor": "#ffffff"
+			},
+			"versionCode": 2
+		},
+		"ios": {
+			"bundleIdentifier": "com.gs-rumana.distill",
+			"buildNumber": "1",
+			"infoPlist": {
+				"UIViewControllerBasedStatusBarAppearance": false
+			}
+		}
+	}
+}
