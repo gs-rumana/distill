@@ -1,66 +1,133 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState, AppStateStatus } from 'react-native';
+import { NotificationService } from '../services/notification-service';
 
 interface UseTimerOptions {
 	interval?: number; // ms, default 1000
 	autoStart?: boolean;
 	onFinish?: () => void;
 	onFirstStart?: () => void;
+	title?: string;
+	taskId?: string;
 }
 
 export function useTimer(initialSeconds: number, options: UseTimerOptions = {}) {
-	const { interval = 1000, autoStart = false, onFinish, onFirstStart } = options;
+	const { interval = 1000, autoStart = false, onFinish, onFirstStart, title = 'Working Session', taskId } = options;
 
 	const [seconds, setSeconds] = useState(initialSeconds);
 	const [isRunning, setIsRunning] = useState(autoStart);
 	const [hasBeenStarted, setHasBeenStarted] = useState(autoStart);
 
-	// 1. Keep refs for callbacks so they don't trigger re-renders or resets
-	// even if the parent passes a new function on every render.
+	const endTimeRef = useRef<number | null>(null);
+	const pausedAtRef = useRef<number | null>(null);
+
 	const onFinishRef = useRef(onFinish);
 	const onFirstStartRef = useRef(onFirstStart);
 
-	// Update refs whenever the passed options change
 	useEffect(() => {
 		onFinishRef.current = onFinish;
 		onFirstStartRef.current = onFirstStart;
 	}, [onFinish, onFirstStart]);
 
-	const intervalRef = useRef<NodeJS.Timeout | null>(null);
+	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+	const getRemainingSeconds = () => {
+		if (endTimeRef.current === null) return 0;
+		const now = Date.now();
+		const remaining = Math.ceil((endTimeRef.current - now) / 1000);
+		return remaining > 0 ? remaining : 0;
+	};
 
 	const start = useCallback(() => {
-		// Check if it's the very first start
+		if (isRunning) return;
+
+		let targetEndTime: number;
+
+		const now = Date.now();
+		
 		if (!hasBeenStarted) {
 			setHasBeenStarted(true);
+			targetEndTime = now + (initialSeconds * 1000);
 			if (onFirstStartRef.current) {
 				onFirstStartRef.current();
 			}
+		} else {
+            targetEndTime = now + (seconds * 1000);
 		}
+
+		endTimeRef.current = targetEndTime;
 		setIsRunning(true);
-	}, [hasBeenStarted]);
+
+		NotificationService.scheduleTimerCompletion(targetEndTime, title, initialSeconds, taskId);
+
+	}, [hasBeenStarted, isRunning, initialSeconds, seconds, title, taskId]);
 
 	const pause = useCallback(() => {
+		if (!isRunning) return;
+
 		setIsRunning(false);
-	}, []);
+
+		NotificationService.cancelTimerNotification();
+
+		const remaining = getRemainingSeconds();
+		setSeconds(remaining);
+
+		endTimeRef.current = null;
+
+	}, [isRunning]);
 
 	const reset = useCallback(() => {
 		setIsRunning(autoStart);
 		setHasBeenStarted(autoStart);
 		setSeconds(initialSeconds);
-	}, [initialSeconds, autoStart]);
+		endTimeRef.current = null;
+		NotificationService.cancelTimerNotification();
+
+		if (autoStart) {
+             const now = Date.now();
+             const targetEndTime = now + (initialSeconds * 1000);
+             endTimeRef.current = targetEndTime;
+             NotificationService.scheduleTimerCompletion(targetEndTime, title, initialSeconds, taskId);
+		}
+
+	}, [initialSeconds, autoStart, title, taskId]);
+
+    const restart = useCallback(() => {
+        const now = Date.now();
+        const targetEndTime = now + (initialSeconds * 1000);
+        endTimeRef.current = targetEndTime;
+
+        setIsRunning(true);
+        setHasBeenStarted(true);
+        setSeconds(initialSeconds);
+        
+        NotificationService.scheduleTimerCompletion(targetEndTime, title, initialSeconds, taskId);
+    }, [initialSeconds, title, taskId]);
+
+	useEffect(() => {
+		if (autoStart && !hasBeenStarted) {
+			start();
+		}
+	}, []);
+
 
 	// 2. The Tick Logic
-	// This effect is purely responsible for the interval
 	useEffect(() => {
 		if (!isRunning) {
 			return;
 		}
 
 		intervalRef.current = setInterval(() => {
-			setSeconds((prev) => {
-				// Just return the math here, no side effects!
-				// We prevent it from going below 0 here for visual consistency
-				return prev > 0 ? prev - 1 : 0;
-			});
+			const remaining = getRemainingSeconds();
+			setSeconds(remaining);
+			
+			if (remaining <= 0) {
+				setIsRunning(false);
+				endTimeRef.current = null;
+				if (onFinishRef.current) {
+					onFinishRef.current();
+				}
+			}
 		}, interval);
 
 		return () => {
@@ -68,18 +135,28 @@ export function useTimer(initialSeconds: number, options: UseTimerOptions = {}) 
 		};
 	}, [isRunning, interval]);
 
-	// 3. The Monitor Logic
-	// This effect watches 'seconds' and handles stopping/finishing
+	// 3. AppState Handling (Background/Foreground)
 	useEffect(() => {
-		if (seconds === 0 && isRunning) {
-			setIsRunning(false);
-			if (onFinishRef.current) {
-				onFinishRef.current();
+		const handleAppStateChange = (nextAppState: AppStateStatus) => {
+			if (nextAppState === 'active' && isRunning) {
+				const remaining = getRemainingSeconds();
+				setSeconds(remaining);
+                
+                if (remaining <= 0) {
+                    setIsRunning(false);
+                    endTimeRef.current = null;
+                    if (onFinishRef.current) onFinishRef.current();
+                }
 			}
-		}
-	}, [seconds, isRunning]);
+		};
 
-	// Cleanup on unmount
+		const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+		return () => {
+			subscription.remove();
+		};
+	}, [isRunning]);
+
 	useEffect(() => {
 		return () => {
 			if (intervalRef.current) clearInterval(intervalRef.current);
@@ -95,6 +172,7 @@ export function useTimer(initialSeconds: number, options: UseTimerOptions = {}) 
 		start,
 		pause,
 		reset,
+		restart,
 		hasStarted,
 		hasCompleted,
 	};

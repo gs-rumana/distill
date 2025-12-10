@@ -6,7 +6,7 @@ import Icon from '../components/icon';
 import Text from '../components/text';
 import { Spacing, vw } from '../constants/theme';
 import View from '../components/view';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import useTimer from '../hooks/useTimer';
 import { useTheme } from '../hooks/useTheme';
 import { Alert, BackHandler, StyleSheet, TextInput } from 'react-native';
@@ -16,6 +16,8 @@ import { useDispatch } from 'react-redux';
 import { editTask, startSession } from '../redux/slices/main';
 import { Task } from '../typings/data';
 import useAppSelector from '../hooks/useAppSelector';
+import notifee, { EventType } from '@notifee/react-native';
+import { NotificationService } from '../services/notification-service';
 
 const WorkingSession = () => {
 	const { textColors } = useTheme();
@@ -27,14 +29,20 @@ const WorkingSession = () => {
 
 	const timerDurationSeconds = timeDuration * 60;
 
-	const { isRunning, pause, reset, seconds, start, hasCompleted, hasStarted } = useTimer(timerDurationSeconds, {
+	const { isRunning, pause, reset, seconds, start, hasCompleted, hasStarted, restart } = useTimer(timerDurationSeconds, {
 		autoStart: autoStartTimer,
 		onFirstStart: () => {
 			if (task) {
 				dispatch(startSession({ taskId: task.id, duration: timeDuration }));
 			}
 		},
+		title: task?.title || 'Distill Session',
+		taskId: task?.id,
 	});
+
+	useEffect(() => {
+		NotificationService.requestPermissions();
+	}, []);
 
 	const timeToShow = `${Math.floor(seconds / 60)
 		.toString()
@@ -75,12 +83,12 @@ const WorkingSession = () => {
 			},
 		]);
 	};
-	const handleCompleted = () => {
+	const handleCompleted = useCallback(() => {
 		if (task) {
 			dispatch(editTask({ id: task.id, status: 3 }));
 		}
 		router.back();
-	};
+	}, [task, dispatch]);
 
 	useEffect(() => {
 		const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -90,6 +98,19 @@ const WorkingSession = () => {
 
 		return () => subscription.remove();
 	}, [onExit]);
+	useEffect(() => {
+		const unsubscribe = notifee.onForegroundEvent(({ type, detail }) => {
+			if (type === EventType.ACTION_PRESS && detail.pressAction?.id) {
+				if (detail.pressAction.id === 'complete') {
+					handleCompleted();
+				} else if (detail.pressAction.id === 'restart') {
+					restart();
+				}
+			}
+		});
+		return unsubscribe;
+	}, [handleCompleted, restart]);
+
 	return (
 		<Container safeTop>
 			{/* <StatusBar hidden animated hideTransitionAnimation='slide' /> */}
