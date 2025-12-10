@@ -2,5 +2,5 @@
   <color name="splashscreen_background">#ffffff</color>
   <color name="colorPrimary">#553FE9</color>
   <color name="iconBackground">#ffffff</color>
-  <color name="bootsplash_background">#ffffff</color>
+  <color name="bootsplash_background">#f8f8f8</color>
 </resources>
