@@ -1,26 +1,266 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <title>Distill - Focus until Done</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="color-scheme" content="dark light" />
 
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="assets/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-    <link rel="manifest" href="assets/site.webmanifest">
-</head>
-<body data-theme="light">
-    <nav class="navbar">
-        <img src="assets/images/icon.png" class="logo" />
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
-    <button>Hello</button>
-</body>
+		<title>Distill - Focus until done</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
+		<link rel="manifest" href="./site.webmanifest" />
+        
+		<meta property="og:title" content="Distill - Focus until done" />
+		<meta property="og:description" content="Distill intentionally limits your tasks to help you focus on what truly matters. Prioritize, execute, and track your progress with our built-in Pomodoro timer." />
+		<meta property="og:image" content="./images/mockup-iphone.png" />
+		<meta property="og:url" content="https://distill.gs-rumana.com" />
+		<meta property="og:type" content="website" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@gs_rumana" />
+		<meta name="twitter:creator" content="@gs_rumana" />
+		<meta name="twitter:title" content="Distill - Focus until done" />
+		<meta name="twitter:description" content="Distill intentionally limits your tasks to help you focus on what truly matters. Prioritize, execute, and track your progress with our built-in Pomodoro timer." />
+		<meta name="twitter:image" content="./images/mockup-iphone.png" />
+		<script type="module" crossorigin src="./assets/main-DMr3jrLR.js"></script>
+		<link rel="stylesheet" crossorigin href="./assets/main-6zgP6hGd.css">
+	</head>
+	<body class="font-rubik bg-base-100 text-base-content overflow-x-hidden">
+		<!-- Navbar -->
+		<div
+			class="navbar bg-base-100/90 backdrop-blur-md fixed top-0 z-50 px-4 md:px-8 shadow-sm transition-all duration-300"
+		>
+			<div class="flex-1">
+				<a class="btn btn-ghost text-2xl font-bold text-primary">
+                    <img src="./images/icon.png" alt="Distill Logo" class="w-8 h-8">
+                    <span>Distill</span>
+                </a>
+			</div>
+			<div class="flex-none hidden md:flex">
+				<ul class="menu menu-horizontal px-1 font-medium">
+					<li><a href="#features">Features</a></li>
+					<li><a href="#how-it-works">How it works</a></li>
+					<li><a href="#about">About</a></li>
+				</ul>
+			</div>
+			<div class="flex-none ml-2">
+				<a href="https://play.google.com/store/apps/details?id=com.gs_rumana.distill" class="btn btn-primary rounded-full px-6 text-white shadow-md hover:shadow-lg">Get App</a>
+			</div>
+		</div>
+
+		<!-- Hero Section -->
+		<div class="hero min-h-screen bg-linear-to-br from-base-100 via-base-200 to-primary/5 pt-16">
+			<div class="hero-content flex-col lg:flex-row-reverse gap-12 max-w-7xl mx-auto px-4">
+				<div class="flex-1 hidden lg:flex" data-aos="fade-left" data-aos-delay="200">
+					<!-- Placeholder for App Screenshot/Mockup -->
+					<img src="./images/mockup-iphone.png" alt="App Screenshot" class="w-full h-full object-cover" />
+					<!-- Decorative circle -->
+					<div
+						class="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"
+					></div>
+				</div>
+
+				<div class="flex-1 text-center lg:text-left" data-aos="fade-up">
+					<div class="badge badge-secondary badge-outline mb-4 p-3 font-semibold">Productivity Redefined</div>
+					<h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6">
+						Focus until <span class="text-primary">done.</span>
+					</h1>
+					<p class="py-6 text-lg opacity-80 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+						Distill intentionally limits your tasks to help you focus on what truly matters. Prioritize,
+						execute, and track your progress with our built-in Pomodoro timer.
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" id="download">
+						<!-- <button
+							class="btn btn-primary btn-lg rounded-full shadow-lg hover:shadow-primary/30 transition-all text-white"
+						>
+							Download for iOS
+						</button> -->
+						<a class="btn btn-outline btn-lg rounded-full hover:bg-base-content hover:text-base-100" href="https://play.google.com/store/apps/details?id=com.gs_rumana.distill" target="_blank">
+							Download for Android
+                        </a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Features Section -->
+		<div id="features" class="py-24 bg-base-100 relative">
+			<div class="max-w-7xl mx-auto px-4">
+				<div class="text-center mb-16" data-aos="fade-up">
+					<h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Features</h2>
+					<h3 class="text-4xl font-bold">Less clutter, more focus</h3>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<!-- Feature 1 -->
+					<div
+						class="card bg-base-100 shadow-xl border border-base-200 hover:border-primary/50 transition-all hover:-translate-y-2"
+						data-aos="fade-up"
+						data-aos-delay="100"
+					>
+						<div class="card-body items-center text-center">
+							<div
+								class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-8 h-8"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+									/>
+								</svg>
+							</div>
+							<h4 class="card-title mb-2">Top Tasks</h4>
+							<p class="opacity-80">
+								Distill highlights your most important top 3 tasks so you don't get overwhelmed.
+							</p>
+						</div>
+					</div>
+					<!-- Feature 2 -->
+					<div
+						class="card bg-base-100 shadow-xl border border-base-200 hover:border-secondary/50 transition-all hover:-translate-y-2"
+						data-aos="fade-up"
+						data-aos-delay="200"
+					>
+						<div class="card-body items-center text-center">
+							<div
+								class="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary mb-4"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-8 h-8"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+									/>
+								</svg>
+							</div>
+							<h4 class="card-title mb-2">Pomodoro Timer</h4>
+							<p class="opacity-80">
+								Built-in focus timer to help you stay in the flow and get things done efficiently.
+							</p>
+						</div>
+					</div>
+					<!-- Feature 3 -->
+					<div
+						class="card bg-base-100 shadow-xl border border-base-200 hover:border-accent/50 transition-all hover:-translate-y-2"
+						data-aos="fade-up"
+						data-aos-delay="300"
+					>
+						<div class="card-body items-center text-center">
+							<div
+								class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center text-accent mb-4"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-8 h-8"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+									/>
+								</svg>
+							</div>
+							<h4 class="card-title mb-2">Analytics</h4>
+							<p class="opacity-80">
+								Track your productivity trends and see where your time goes each day.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- How it Works Section -->
+		<div id="how-it-works" class="py-24 bg-base-200">
+			<div class="max-w-7xl mx-auto px-4">
+				<div class="text-center mb-16" data-aos="fade-up">
+					<h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Workflow</h2>
+					<h3 class="text-4xl font-bold">How Distill works</h3>
+				</div>
+
+				<ul class="steps steps-vertical lg:steps-horizontal w-full" data-aos="fade-up" data-aos-delay="100">
+					<li class="step step-primary" data-content="1">
+						<div class="text-left lg:text-center mt-2 lg:mt-4 p-4">
+							<h4 class="font-bold text-lg">Add Tasks</h4>
+							<p class="text-sm opacity-70">Dump your brain. Add everything you need to do.</p>
+						</div>
+					</li>
+					<li class="step step-primary" data-content="2">
+						<div class="text-left lg:text-center mt-2 lg:mt-4 p-4">
+							<h4 class="font-bold text-lg">Prioritize</h4>
+							<p class="text-sm opacity-70">Distill picks your top tasks automatically.</p>
+						</div>
+					</li>
+					<li class="step step-primary" data-content="3">
+						<div class="text-left lg:text-center mt-2 lg:mt-4 p-4">
+							<h4 class="font-bold text-lg">Focus</h4>
+							<p class="text-sm opacity-70">Run the timer. Work until the ding.</p>
+						</div>
+					</li>
+					<li class="step step-neutral" data-content="4">
+						<div class="text-left lg:text-center mt-2 lg:mt-4 p-4 text-neutral">
+							<h4 class="font-bold text-lg">Repeat</h4>
+							<p class="text-sm">Build a streak and master your day.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- About Section -->
+		<div id="about" class="py-24 bg-base-100">
+			<div class="max-w-4xl mx-auto px-4 text-center" data-aos="fade-up">
+				<h2 class="text-3xl font-bold mb-6">Built for getting things done.</h2>
+				<p class="text-xl opacity-80 leading-relaxed mb-8">
+					We believe that productivity isn't about doing more things—it's about doing the
+					<strong>right</strong> things. Distill was created to help you cut through the noise and focus on
+					your goals, one Pomodoro at a time.
+				</p>
+				<div class="divider w-32 mx-auto"></div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer class="footer flex justify-between p-10 bg-base-200 text-base-content">
+			<aside class="flex-1">
+				<div class="flex items-center gap-2 mb-2">
+					<span class="text-2xl font-bold">Distill</span>
+				</div>
+				<p class="opacity-70">Focus until done.<br />Open Source Project by <a href="https://github.com/gs-rumana" class="link-primary" target="_blank">Gursahb Singh</a></p>
+			</aside>
+			<nav class="flex-1">
+				<h6 class="footer-title opacity-100 text-primary">Links</h6>
+				<a class="link link-hover opacity-70 hover:opacity-100" href="https://github.com/gs-rumana/distill">GitHub</a>
+				<a class="link link-hover opacity-70 hover:opacity-100" href="https://play.google.com/store/apps/details?id=com.gs_rumana.distill">Play Store</a>
+				<a class="link link-hover opacity-70 hover:opacity-100" href="/privacy-policy">Privacy Policy</a>
+			</nav>
+		</footer>
+
+	</body>
 </html>
