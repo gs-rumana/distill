@@ -29,14 +29,14 @@
 				}
 			]
 		],
-		"version": "0.1.0",
+		"version": "0.2.0",
 		"android": {
 			"package": "com.gs_rumana.distill",
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/android-adaptive-foreground.png",
 				"backgroundColor": "#ffffff"
 			},
-			"versionCode": 2
+			"versionCode": 3
 		},
 		"ios": {
 			"bundleIdentifier": "com.gs-rumana.distill",
